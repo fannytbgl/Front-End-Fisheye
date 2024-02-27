@@ -1,14 +1,25 @@
 export function photographerTemplate(data) {
-    const { name, portrait, city, country, tagline, price } = data;
+    const { name, id, portrait, city, country, tagline, price } = data;
 
     const picture = `assets/photographers/portraits/${portrait}`;
+    const url = `photographer.html/${id}`;
 
     function getUserCardDOM() {
         const article = document.createElement( 'article' );
-        const img = document.createElement( 'img' );
-        img.setAttribute("src", picture);
-        const h2 = document.createElement( 'h2' );
-        h2.textContent = name;
+
+        // Création de l'image et du lien
+        const imgLink = document.createElement('a');
+        imgLink.setAttribute('href', url);
+        imgLink.appendChild(document.createElement('img')).setAttribute('src', picture);
+        article.appendChild(imgLink);
+
+        // Création du H2 et du lien
+        const titleLink = document.createElement('a');
+        titleLink.setAttribute('href', url);
+        titleLink.appendChild(document.createElement('h2')).textContent = name;
+        article.appendChild(titleLink);
+
+        // Création des paragraphes
         const pLocation = document.createElement('p');
         pLocation.classList.add("location");
         pLocation.textContent = `${city}, ${country}`;
@@ -19,8 +30,6 @@ export function photographerTemplate(data) {
         pPrice.classList.add("price");
         pPrice.textContent = `${price}€/jour`;
 
-        article.appendChild(img);
-        article.appendChild(h2);
         article.appendChild(pLocation);
         article.appendChild(pTagline);
         article.appendChild(pPrice);
