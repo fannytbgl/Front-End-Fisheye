@@ -1,4 +1,4 @@
-    import photographer from '../templates/photographer'
+import { photographerTemplate } from "../templates/photographer.js";
     
     async function getPhotographers() {
         try {
@@ -36,7 +36,7 @@
         try {
             // Récupère les datas des photographes
             const photographers = await getPhotographers();
-            displayData(photographers);
+            displayData(photographers)
         } catch (error) {
             console.error('Erreur lors de l\'initialisation ', error);
             // Gérez l'erreur selon vos besoins
