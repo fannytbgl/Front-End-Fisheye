@@ -2,7 +2,7 @@ export function photographerTemplate(data) {
     const { name, id, portrait, city, country, tagline, price } = data;
 
     const picture = `assets/photographers/portraits/${portrait}`;
-    const url = `photographer.html/${id}`;
+    const url = `photographer.html?id=${id}`;
 
     function getUserCardDOM() {
         const article = document.createElement( 'article' );
