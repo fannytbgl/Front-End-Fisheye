@@ -1,23 +1,48 @@
-/*export async function getPhotographerDetails(photographerId) {
-    try {
-        // Assuming you have a local data structure with photographer details
-        const photographerDataResponse = await fetch(`./data/photographers/${photographerId}.json`);
-
-        if (!photographerDataResponse.ok) {
-            throw new Error('Erreur lors du chargement des détails du photographe');
-        }
-
-        const photographerDetails = await photographerDataResponse.json();
-        return photographerDetails;
-    } catch (error) {
-        console.error('Erreur lors de la récupération des détails du photographe ', error);
-        // Handle the error according to your needs
+// Test de getPhotographersDetails
+//getPhotographersDetails(243)
+//.then(result => console.log(result));
+ 
+async function getPhotographersDetails(photographerId) {
+        // Recupere toutes les data de photographers.json
+        const photographersDataResponse = await fetch('./data/photographers.json');
+        const photographersData = await photographersDataResponse.json();
+        
+        const photographers = photographersData.photographers;
+        const medias = photographersData.media;
+        
+        // Retrouve les infos du photographe
+        // sous forme de dictionnaire {id : 12, name : "Tysona", comportement : "exemplaire"}
+        // Pour accéder a un element du dico :
+        // dico[name] ca donne "Tysona"
+        // infos sur array.find() parce que chatgpt c'est bien
+        // mais faut lire la documentation
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+        const photograph = photographers.find(candidat => candidat["id"] == photographerId);
+        
+        // check pour chaque photo si l'id du photographe correspond 
+        // mediaDetails -> [{photo1}, {photo2}, {photo3}] liste de dictionnaires
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+        const mediaDetails = [];
+        medias.forEach(media => {
+            if (media["photographerId"] == photographerId) {
+                mediaDetails.push(media);
+            }
+        })
+        // Et ces deux trucs la sont dans une array 
+        // une array de longueur 2 avec un dico puis une array de dico, c'est naze mais bon ahah
+        // array = [{name : "Tysona", age = 1}, [{name : "Ouli", age = "1"}, {name : "Fanny", ageMental = 12}]]
+        // array[0][name] => "Tysona"
+        // array[1][1][ageMental] => 12
+        return [photograph, mediaDetails];
     }
-}*/
 
-window.addEventListener('DOMContentLoaded', async () => {
-    // Récupérer l'ID du photographe à partir de l'URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const photographerId = urlParams.get('id');
-    getPhotographerDetails(photographerId);
-})
+    //L'événement DOMContentLoaded écoute le chargement de la page.
+    window.addEventListener('DOMContentLoaded', async () => {
+        // Récupérer l'ID du photographe à partir de l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const photographerId = urlParams.get('id');
+        
+        // Appeler la fonction getPhotographerDetails avec l'ID du photographe récupéré
+        const details = await getPhotographersDetails(photographerId);
+        console.log(details);
+    });
