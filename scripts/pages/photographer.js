@@ -1,3 +1,5 @@
+import { photographerPageTemplate } from "../templates/photographer_page.js";
+
 // Test de getPhotographersDetails
 //getPhotographersDetails(243)
 //.then(result => console.log(result));
@@ -36,6 +38,19 @@ async function getPhotographersDetails(photographerId) {
         return [photograph, mediaDetails];
     }
 
+    async function displayPhotographerData(photographer) {
+        const photographerSection = document.querySelector(".photograph-header");
+
+        // Appeler la fonction photographerPageTemplate avec les données du photographe
+        const photographerPageModel = photographerPageTemplate(photographer);
+    
+        // Obtenir le DOM de l'info du photographe à partir du modèle
+        const photographerInfoDom = photographerPageModel.getPhotographerInfoDom();
+    
+        // Ajouter le DOM de l'info du photographe à la section
+        photographerSection.appendChild(photographerInfoDom);
+    }
+
     //L'événement DOMContentLoaded écoute le chargement de la page.
     window.addEventListener('DOMContentLoaded', async () => {
         // Récupérer l'ID du photographe à partir de l'URL
@@ -43,6 +58,8 @@ async function getPhotographersDetails(photographerId) {
         const photographerId = urlParams.get('id');
         
         // Appeler la fonction getPhotographerDetails avec l'ID du photographe récupéré
-        const details = await getPhotographersDetails(photographerId);
-        console.log(details);
+        const [photographer, mediaDetails] = await getPhotographersDetails(photographerId);
+
+        // Passer les données du photographe à displayPhotographerData
+        displayPhotographerData(photographer, mediaDetails);
     });
