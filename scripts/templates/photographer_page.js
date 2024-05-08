@@ -4,6 +4,7 @@ export function photographerPageTemplate(data, mediaDetails) {
     console.log(name, city, country, tagline, price);
     const picture = `assets/photographers/portraits/${portrait}`;
 
+    // Création de la section dédiée aux informations du photographe
     function getPhotographerInfoDom() {
         
         //Création div infos
@@ -35,31 +36,42 @@ export function photographerPageTemplate(data, mediaDetails) {
         return divPhotographerInfo;
     }
 
+    // Gestion des médias en fonction du format vidéo ou image (factory Media)
+    function mediaElementFactory(media) {
+        if (media.image) {
+            const image = document.createElement('img');
+            image.src = `assets/photographers/pictures/${media.image}`;
+            image.alt = media.title;
+            return image;
+        } else if (media.video) {
+            const video = document.createElement('video');
+            video.src = `assets/photographers/pictures/${media.video}`;
+            video.alt = media.title;
+            video.controls = true;
+            return video;
+        } else {
+            // Gérer les autres types de médias si nécessaire
+            console.error('Média non pris en charge :', media);
+            return null;
+        }
+    }
+    
+    // Création de la section dédiée aux médias
     function getPhotographerMediaSection(mediaDetails) {
-        // Création de la section pour les médias
+        
         const mediaSection = document.createElement('section');
         mediaSection.classList.add('media-section');
-
-        // Ajout du titre
-        const title = document.createElement('h2');
-        title.textContent = 'Media';
-        mediaSection.appendChild(title);
-
-        // Ajout des médias
+    
         mediaDetails.forEach(media => {
             const mediaElement = document.createElement('div');
             mediaElement.classList.add('media-item');
-            // Ajoutez le code pour afficher chaque média
-            // Par exemple, créer un élément img pour les images ou vidéo pour les vidéos
-            // Assurez-vous d'ajuster le contenu en fonction du type de média (image, vidéo, etc.)
-            // Voici un exemple pour les images :
-            const image = document.createElement('img');
-            image.src = `assets/photographers/${media.image}`;
-            image.alt = media.title;
-            mediaElement.appendChild(image);
-            mediaSection.appendChild(mediaElement);
+            const mediaContent = mediaElementFactory(media);
+            if (mediaContent) {
+                mediaElement.appendChild(mediaContent);
+                mediaSection.appendChild(mediaElement);
+            }
         });
-
+    
         return mediaSection;
     }
 
