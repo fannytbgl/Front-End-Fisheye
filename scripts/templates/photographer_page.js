@@ -1,4 +1,4 @@
-export function photographerPageTemplate(data) {
+export function photographerPageTemplate(data, mediaDetails) {
 
     const { name, id, portrait, city, country, tagline, price } = data;
     console.log(name, city, country, tagline, price);
@@ -35,8 +35,37 @@ export function photographerPageTemplate(data) {
         return divPhotographerInfo;
     }
 
-    // Retourner un objet avec la méthode getPhotographerInfoDom
+    function getPhotographerMediaSection(mediaDetails) {
+        // Création de la section pour les médias
+        const mediaSection = document.createElement('section');
+        mediaSection.classList.add('media-section');
+
+        // Ajout du titre
+        const title = document.createElement('h2');
+        title.textContent = 'Media';
+        mediaSection.appendChild(title);
+
+        // Ajout des médias
+        mediaDetails.forEach(media => {
+            const mediaElement = document.createElement('div');
+            mediaElement.classList.add('media-item');
+            // Ajoutez le code pour afficher chaque média
+            // Par exemple, créer un élément img pour les images ou vidéo pour les vidéos
+            // Assurez-vous d'ajuster le contenu en fonction du type de média (image, vidéo, etc.)
+            // Voici un exemple pour les images :
+            const image = document.createElement('img');
+            image.src = `assets/photographers/${media.image}`;
+            image.alt = media.title;
+            mediaElement.appendChild(image);
+            mediaSection.appendChild(mediaElement);
+        });
+
+        return mediaSection;
+    }
+
+    // Retourner un objet contenant les deux fonctions
     return {
-        getPhotographerInfoDom: getPhotographerInfoDom
+        getPhotographerInfoDom: getPhotographerInfoDom,
+        getPhotographerMediaSection: getPhotographerMediaSection
     };
 }

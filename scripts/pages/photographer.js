@@ -38,17 +38,19 @@ async function getPhotographersDetails(photographerId) {
         return [photograph, mediaDetails];
     }
 
-    async function displayPhotographerData(photographer) {
+    async function displayPhotographerData(photographer, mediaDetails) {
         const photographerSection = document.querySelector(".photograph-header");
 
         // Appeler la fonction photographerPageTemplate avec les données du photographe
-        const photographerPageModel = photographerPageTemplate(photographer);
+        const photographerPageModel = photographerPageTemplate(photographer, mediaDetails);
     
         // Obtenir le DOM de l'info du photographe à partir du modèle
         const photographerInfoDom = photographerPageModel.getPhotographerInfoDom();
+        const photographerMediaDom = photographerPageModel.getPhotographerMediaSection(mediaDetails);
     
         // Ajouter le DOM de l'info du photographe à la section
         photographerSection.appendChild(photographerInfoDom);
+        photographerSection.appendChild(photographerMediaDom);
     }
 
     //L'événement DOMContentLoaded écoute le chargement de la page.
