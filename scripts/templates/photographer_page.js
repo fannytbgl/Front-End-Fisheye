@@ -38,22 +38,29 @@ export function photographerPageTemplate(data, mediaDetails) {
 
     // Gestion des médias en fonction du format vidéo ou image (factory Media)
     function mediaElementFactory(media) {
+
+        // Création de la div contenant les medias
+        const mediaWrapper = document.createElement('div');
+        mediaWrapper.classList.add('media-wrapper');
+
         if (media.image) {
             const image = document.createElement('img');
             image.src = `assets/photographers/pictures/${media.image}`;
             image.alt = media.title;
-            return image;
+            mediaWrapper.appendChild(image);
         } else if (media.video) {
             const video = document.createElement('video');
             video.src = `assets/photographers/pictures/${media.video}`;
             video.alt = media.title;
             video.controls = true;
-            return video;
+            mediaWrapper.appendChild(video);
         } else {
             // Gérer les autres types de médias si nécessaire
             console.error('Média non pris en charge :', media);
             return null;
         }
+
+        return mediaWrapper;
     }
     
     // Création de la section dédiée aux médias
@@ -67,8 +74,7 @@ export function photographerPageTemplate(data, mediaDetails) {
             mediaElement.classList.add('media-item');
             const mediaContent = mediaElementFactory(media);
             if (mediaContent) {
-                mediaElement.appendChild(mediaContent);
-                mediaSection.appendChild(mediaElement);
+                mediaSection.appendChild(mediaContent); // Ajoutez mediaContent au lieu de mediaElement
             }
         });
     

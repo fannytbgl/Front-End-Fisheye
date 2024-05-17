@@ -47,10 +47,12 @@ async function getPhotographersDetails(photographerId) {
         // Obtenir le DOM de l'info du photographe à partir du modèle
         const photographerInfoDom = photographerPageModel.getPhotographerInfoDom();
         const photographerMediaDom = photographerPageModel.getPhotographerMediaSection(mediaDetails);
-    
+
         // Ajouter le DOM de l'info du photographe à la section
         photographerSection.appendChild(photographerInfoDom);
-        photographerSection.appendChild(photographerMediaDom);
+    
+        // Ajouter la section des médias après la section photographerSection
+        photographerSection.parentNode.insertBefore(photographerMediaDom, photographerSection.nextSibling);
     }
 
     //L'événement DOMContentLoaded écoute le chargement de la page.
