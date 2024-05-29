@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
@@ -9,7 +9,7 @@
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <img src="assets/images/logo.png" class="logo" alt="Le logo du website Fisheye"/>
     </header>
     <main id="main">
       <section class="photograph-header">
@@ -17,19 +17,31 @@
       </section>
     </main>
     <div id="contact_modal">
-			<div class="modal">
-				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+			<div class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+        <header>
+          <h2 id="modalTitle">Contactez-moi</h2>
+          <img src="assets/icons/close.svg" alt="Fermer" role="button" tabindex="0" onclick="closeModal()" aria-label="Fermer la fenêtre modale" />
         </header>
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
-					</div>
-          <button class="contact_button">Envoyer</button>
-				</form>
-			</div>
+        <form>
+          <div>
+            <label for="prenom">Prénom</label>
+            <input id="prenom" name="prenom" type="text" aria-required="true" />
+          </div>
+          <div>
+            <label for="nom">Nom</label>
+            <input id="nom" name="nom" type="text" aria-required="true" />
+          </div>
+          <div>
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" aria-required="true" />
+          </div>
+          <div>
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" aria-required="true"></textarea>
+          </div>
+          <button class="contact_button" type="submit">Envoyer</button>
+        </form>
+      </div>
 		</div>
     <script type="module" src="scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
