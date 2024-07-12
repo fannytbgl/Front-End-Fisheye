@@ -42,7 +42,7 @@ export function photographerPageTemplate(data, mediaDetails) {
         // Création de la div contenant les medias
         const mediaWrapper = document.createElement('div');
         mediaWrapper.classList.add('media-wrapper');
-
+        
         if (media.image) {
             const image = document.createElement('img');
             image.src = `assets/photographers/pictures/${media.image}`;
